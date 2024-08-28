@@ -60,27 +60,16 @@ $~~~~$
 
 - 模型 $i$ 在待测试平台上两个指标的得分：
 
-  $ Model\_ i\_ Latency\_ score\_ B~ = ~\frac{Model\_ i\_ Latency\_ A~} {Model\_ i\_ Latency\_ B~} ~ \times 1000 $
-
-  $ Model\_ i\_ Energy\_ score\_ B~ = ~\frac{Model\_ i\_ Energy\_ A~} {Model\_ i\_ Energy\_ B~} ~ \times 1000 $
-
+![Model_i](readmeimg/Model_i.png)
 
 - 待测试平台评估得分：
 
-  $ Latency\_ score\_ B~ = ~AVG（Model\_ i\_ Latency\_ score\_ B）$
-
-  Energy\_ score\_ B~ = ~AVG（Model\_ i\_ Energy\_ score\_ B）
+![score_B](readmeimg/score_B.png)
 
 
 式中：
 
-  $ Model\_ i\_ Latency $表示模型 $i$ 在计算平台上Latency指标的监测值，即模型 $i$ 在计算平台上完成一次推理所耗费的时间。
-
-  $ Model\_ i\_ Energy $ 表示模型 $i$ 在计算平台上Energy的指标的监测值；即模型 $i$ 在计算平台上完成一次推理所耗费的功耗。
-
-  $ Model\_ i\_ Latency\_score\_ B $ 表示模型 $i$ 在待测试平台中Latency指标的得分，用于评价模型推理时间效率。
-
-  $ Model\_ i\_ Energy\_score\_ B $ 表示模型 $i$ 在待测试平台中Energy指标的得分，用于评价 AI 计算卡功耗。
+![note_cn](readmeimg/note_cn.png)
 
 
 ## 3. 开始使用
@@ -92,33 +81,34 @@ $~~~~$
 - 用于GPU测试的PyTorch模型权重：
 [PyTorch模型权重（drive.google）](https://drive.google.com/drive/folders/19DTAlo4n9vDt7KwcKORR9GqDf4z8USKa?usp=sharing)
 
-  -   其中ViT的权重文件： 
+  此外：
+
+  -  ViT的权重文件： 
     [ViT-B-32.pt](https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt)
 
-  - stablediffusionv1_5的权重及其他依赖：
-      ```
+  - stablediffusionv1_5的权重文件：
+      ``` bash
       python3 -c 'from diffusers import StableDiffusionPipeline; model_id = "runwayml/stable-diffusion-v1-5"; pipe = StableDiffusionPipeline.from_pretrained(model_id)'
       ```
 
 - 用于SophgoTPU测试的BModel文件：
 [BModel文件（drive.google）](https://drive.google.com/drive/folders/1bDDZYDz3ctvvUYixU-VAm37Sowwm6aCw?usp=sharing)
 
-  - 其中 llama3 的Bmodel下载：   
-    ```
+  - llama3 的Bmodel下载地址：   
+
+    ```bash
     python3 -m dfss --url=open@sophgo.com:/ext_model_information/LLM/LLM-TPU/llama3-8b_int4_1dev_seq512.bmodel
     ```
 
-  - 其中 stablediffusionv1_5 的Bmodel地址为：
+  - stablediffusionv1_5 的Bmodel下载地址：
 
-    ```
+    ``` bash
     python3 -m dfss --url=open@sophgo.com:/sophon-demo/Stable_diffusion_v1_5/singlize_bmodels.zip
     ```
 
 - 其他依赖文件：
 
-  - 用于llama3 TPU推理的依赖文件编译详见 model/pytorch/language/generative/llama3/utils/README.md
-
-
+  - 用于llama3 TPU推理的依赖文件编译详见 `model/pytorch/language/generative/llama3/utils/README.md`
 
 - 请确保PyTorch模型依赖文件路径符合如下格式：
   ```
@@ -145,7 +135,7 @@ $~~~~$
   │       │           └── models--runwayml--stable-diffusion-v1-5
   ...
   ```
-  其中, 项目中vison类别下的pytorch模型暂无依赖文件，models--runwayml--stable-diffusion-v1-5应解压至对应路径。
+  其中, 项目中vison类别下的pytorch模型暂无依赖文件，`models--runwayml--stable-diffusion-v1-5`应解压至对应路径。
 
 - 请确保bmodel文件路径符合如下格式：
   ```
@@ -207,15 +197,14 @@ $~~~~$
   ```
 
 
-
 ### 3.3 项目启动
 - 使用模型测试集仓库中所有模型一次性测试
 
-      python main.py --testmode 0
+      python3 main.py --testmode 0
 
 - 使用模型测试集仓库中一个模型单次测试
 
-      python main.py --testmode 1
+      python3 main.py --testmode 1
 
 ### 3.4 测试结果
 完成测试后，测试结果将保存在 "savefiles_iter**" 文件夹内。
@@ -268,9 +257,9 @@ $~~~~$
 ## 5. 测试结果示例
 
 
-当前版本已完成对 NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, AMD Radeon RX 6700, AMD Radeon RX 7900 以及 SophgoTPU 的测试。测试入口：
+当前版本已完成对 NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT, AMD Radeon RX 7900XTX (0x744c) 的测试。测试入口：
 
-    python main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
+    python3 main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
   
 测试结果如下：
 

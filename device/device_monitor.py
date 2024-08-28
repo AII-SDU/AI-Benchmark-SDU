@@ -86,7 +86,7 @@ class DeviceMonitor:
             t_elapsed = time.time() - t_start
             time_to_sleep = max(0, self.opt.device_monitor_interval - t_elapsed)
             if self.opt.device_monitor_interval < t_elapsed:
-                print(f'{self.device_type}查询用时超过device循环监控间隔，建议降低--device_monitor_interval数值')
+                print(f'{self.device_type} query time exceeded device monitoring interval. It is recommended to reduce the value of --device_monitor_interval.')
             time.sleep(time_to_sleep)
 
 

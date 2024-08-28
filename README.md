@@ -60,25 +60,15 @@ The scoring includes two parts: 1. Model inference time efficiency; 2. AI accele
 
 - The scores of the two indicators for model $i$ on the platform under test:
 
-  $ Model\_ i\_ Latency\_ score\_ B~ = ~\frac{Model\_ i\_ Latency\_ A~} {Model\_ i\_ Latency\_ B~} ~ \times 1000 $
-
-  $ Model\_ i\_ Energy\_ score\_ B~ = ~\frac{Model\_ i\_ Energy\_ A~} {Model\_ i\_ Energy\_ B~} ~ \times 1000 $
+  ![Model_i](readmeimg/Model_i.png)
 
 - The overall evaluation score of the platform under test:
 
-  $ Latency\_ score\_ B~ = ~AVG（Model\_ i\_ Latency\_ score\_ B）$
-
-  $ Energy\_ score\_ B~ = ~AVG（Model\_ i\_ Energy\_ score\_ B）$
+  ![score_B](readmeimg/score_B.png)
 
 Where:
 
-  $ Model\_ i\_ Latency $ represents the Latency indicator value of model $i$ on the computing platform, i.e., the time it takes for model $i$ to complete one inference on the computing platform.
-
-  $ Model\_ i\_ Energy $ represents the Energy indicator value of model $i$ on the computing platform, i.e., the power consumption required for model $i$ to complete one inference on the computing platform.
-
-  $ Model\_ i\_ Latency\_ score\_ B $ represents the Latency score of model $i$ on the platform under test, which is used to evaluate model inference time efficiency.
-
-  $ Model\_ i\_ Energy\_ score\_ B $ represents the Energy score of model $i$ on the platform under test, which is used to evaluate AI accelerator card power consumption.
+  ![note_cn](readmeimg/note_en.png)
 
 
 ## 3. Getting Started
@@ -87,11 +77,35 @@ Where:
 
 ### 3.2 Project Dependency Files
 
-- PyTorch model weights for GPU testing:
-[PyTorch Model Weights (Google Drive)](https://drive.google.com/drive/folders/19DTAlo4n9vDt7KwcKORR9GqDf4z8USKa?usp=sharing)
+- **PyTorch model weights for GPU testing:**
+  [PyTorch Model Weights (Google Drive)](https://drive.google.com/drive/folders/19DTAlo4n9vDt7KwcKORR9GqDf4z8USKa?usp=sharing)
 
-- BModel files for SophgoTPU testing:
-[BModel Files (Google Drive)](https://drive.google.com/drive/folders/1bDDZYDz3ctvvUYixU-VAm37Sowwm6aCw?usp=sharing)
+  Additionally:
+
+  - ViT weight file: 
+    [ViT-B-32.pt](https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt)
+
+  - StableDiffusion v1_5 weight file:
+    ```bash
+    python3 -c 'from diffusers import StableDiffusionPipeline; model_id = "runwayml/stable-diffusion-v1-5"; pipe = StableDiffusionPipeline.from_pretrained(model_id)'
+    ```
+
+- **BModel files for SophgoTPU testing:**
+  [BModel Files (Google Drive)](https://drive.google.com/drive/folders/1bDDZYDz3ctvvUYixU-VAm37Sowwm6aCw?usp=sharing)
+
+  - llama3 Bmodel download URL:
+    ```bash
+    python3 -m dfss --url=open@sophgo.com:/ext_model_information/LLM/LLM-TPU/llama3-8b_int4_1dev_seq512.bmodel
+    ```
+
+  - StableDiffusion v1_5 Bmodel download URL:
+    ```bash
+    python3 -m dfss --url=open@sophgo.com:/sophon-demo/Stable_diffusion_v1_5/singlize_bmodels.zip
+    ```
+
+- **Other dependency files:**
+
+  - For the dependency files required for llama3 TPU inference, refer to the compilation details in `model/pytorch/language/generative/llama3/utils/README.md`
 
 - Ensure that the paths for the PyTorch model weights are formatted as follows. Vision models in the project do not use weights for now:
 
@@ -119,6 +133,7 @@ Where:
   │       │           └── models--runwayml--stable-diffusion-v1-5
   ...
   ```
+ - Currently, there are no dependency files for PyTorch models under the vision category in the project. The `models--runwayml--stable-diffusion-v1-5` should be extracted to the corresponding path.
 
 - Ensure that the paths for the bmodel files are formatted as follows:
 
@@ -199,7 +214,7 @@ The test results will display the AI accelerator's score on the current device a
 
 - Model Inference Details
 
-  The inference methods for different types of models vary slightly. Input size is crucial to model inference efficiency and significantly impacts the power consumption performance of AI accelerator cards.
+  The inference methods for different types of models vary slightly. Input size is crucial to model inference efficiency and significantly impacts the power consumption performance of AI accelerators.
 
   1. Details of Model Inference in the Vision Category
 
@@ -238,9 +253,9 @@ The test results will display the AI accelerator's score on the current device a
 
 ## 5. Sample Test Results
 
-Tests have been completed for NVIDIA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, AMD Radeon RX 6700, and SophgoTPU in the current version. The test command is as follows:
+Tests have been completed for NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT and AMD Radeon RX 7900XTX (0x744c) in the current version. The test command is as follows:
 
-    python main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
+    python3 main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
   
 The test results are as follows:
 
