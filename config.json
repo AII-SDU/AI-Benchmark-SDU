@@ -5,9 +5,9 @@
         "language/nlp/ernie3",
         "multimodality/classification/clip",
         "multimodality/generative/stablediffusionv1_5",
-        "vision/classification/ViT",
         "vision/classification/mobilenetv2",
         "vision/classification/resnet",
+        "vision/classification/vit",
         "vision/detection/ghostnet",
         "vision/detection/yolov5s",
         "vision/segmentation/bisenetv2",
@@ -16,7 +16,7 @@
     "model_info": {
         "language/generative/llama3": {
             "Params(M)": 803,
-            "FLOPs(G)": 1000,
+            "FLOPs(G)": null,
             "Latency_stand": 12.823423942847835,
             "Energy_stand": 3.071040762124711
         },
@@ -44,12 +44,6 @@
             "Latency_stand": 9935.393543243408,
             "Energy_stand": 2408.9270580000016
         },
-        "vision/classification/ViT": {
-            "Params(M)": 86.415592,
-            "FLOPs(G)": 33.727260672,
-            "Latency_stand": 6.1526401449755825,
-            "Energy_stand": 1.5099032608695657
-        },
         "vision/classification/mobilenetv2": {
             "Params(M)": 3.504872,
             "FLOPs(G)": 0.85469184,
@@ -61,6 +55,12 @@
             "FLOPs(G)": 10.797092864,
             "Latency_stand": 5.5473242494048876,
             "Energy_stand": 0.9952315140682305
+        },
+        "vision/classification/vit": {
+            "Params(M)": 86.415592,
+            "FLOPs(G)": 33.727260672,
+            "Latency_stand": 6.1526401449755825,
+            "Energy_stand": 1.5099032608695657
         },
         "vision/detection/ghostnet": {
             "Params(M)": 5.182508,

@@ -108,31 +108,32 @@ $~~~~$
 
 - 其他依赖文件：
 
-  - 用于llama3 TPU推理的依赖文件编译详见 `model/pytorch/language/generative/llama3/utils/README.md`
+  - 用于llama3 TPU推理的依赖文件编译详见 `model/model/model_set/pytorch/language/generative/llama3/utils/README.md`
 
 - 请确保PyTorch模型依赖文件路径符合如下格式：
   ```
   Benchmark
   ├── model
-  │   └── pytorch
-  │       ├── language
-  │       │   ├── generative
-  │       │   │   └── llama3
-  │       │   │       └── ggml-meta-llama-3-8b-Q4_K_M.gguf
-  │       │   └── nlp
-  │       │       ├── bert
-  │       │       │   └── vocab
-  │       │       │       └── pytorch_model.bin
-  │       │       └── ernie3
-  │       │           └── vocab
-  │       │               └──pytorch_model.bin
-  │       ├── multimodality
-  │       │   ├── classification
-  │       │   │   └── clip
-  │       │   │       └── ViT-B-32.pt
-  │       │   └── generative
-  │       │       └── stablediffusionv1_5
-  │       │           └── models--runwayml--stable-diffusion-v1-5
+  │   └── model_set
+  │       └── pytorch
+  │           ├── language
+  │           │   ├── generative
+  │           │   │   └── llama3
+  │           │   │       └── ggml-meta-llama-3-8b-Q4_K_M.gguf
+  │           │   └── nlp
+  │           │       ├── bert
+  │           │       │   └── vocab
+  │           │       │       └── pytorch_model.bin
+  │           │       └── ernie3
+  │           │           └── vocab
+  │           │               └──pytorch_model.bin
+  │           ├── multimodality
+  │           │   ├── classification
+  │           │   │   └── clip
+  │           │   │       └── ViT-B-32.pt
+  │           │   └── generative
+  │           │       └── stablediffusionv1_5
+  │           │           └── models--runwayml--stable-diffusion-v1-5
   ...
   ```
   其中, 项目中vison类别下的pytorch模型暂无依赖文件，`models--runwayml--stable-diffusion-v1-5`应解压至对应路径。
@@ -141,58 +142,59 @@ $~~~~$
   ```
   Benchmark
   ├── model
-  │   ├── bmodel
-  │   │   ├── language
-  │   │   │   ├── generative
-  │   │   │   │   └── llama3
-  │   │   │   │       └── llama3-8b_int4_1dev_seq512.bmodel
-  │   │   │   └── nlp
-  │   │   │       ├── bert
-  │   │   │       │   ├── bert4torchf16.bmodel
-  │   │   │       │   └── bert4torchf32.bmodel
-  │   │   │       └── ernie3
-  │   │   │           ├── ernie3_1684x_f16.bmodel
-  │   │   │           └── ernie3_1684x_f32.bmodel
-  │   │   ├── multimodality
-  │   │   │   ├── classification
-  │   │   │   │   └── clip
-  │   │   │   │       ├── clip_image_vitb32_bm1684x_f16.bmodel
-  │   │   │   │       ├── clip_image_vitb32_f32.bmodel
-  │   │   │   │       ├── clip_text_vitb32_bm1684x_f16.bmodel
-  │   │   │   │       └── clip_text_vitb32_f32.bmodel
-  │   │   │   ├── detection
-  │   │   │   └── generative
-  │   │   │       └── stablediffusionv1_5
-  │   │   │           └── singlize
-  │   │   │               ├── text_encoder_1684x_f32.bmodel
-  │   │   │               ├── unet_1684x_f16.bmodel
-  │   │   │               ├── vae_decoder_1684x_f16.bmodel
-  │   │   │               └── vae_encoder_1684x_f16.bmodel
-  │   │   └── vision
-  │   │       ├── classification
-  │   │       │   ├── mobilenetv2
-  │   │       │   │   ├── mobilenetv2_1684x_f16.bmodel
-  │   │       │   │   └── mobilenetv2_1684x_f32.bmodel
-  │   │       │   ├── resnet
-  │   │       │   │   ├── resnet_1684x_f16.bmodel
-  │   │       │   │   └── resnet_1684x_f32.bmodel
-  │   │       │   └── ViT
-  │   │       │       ├── vit_1684x_f16.bmodel
-  │   │       │       └── vit_1684x_f32.bmodel
-  │   │       ├── detection
-  │   │       │   ├── ghostnet
-  │   │       │   │   ├── ghostnet_1684x_f16.bmodel
-  │   │       │   │   └── ghostnet_1684x_f32.bmodel
-  │   │       │   └── yolov5s
-  │   │       │       ├── yolov5s_1684x_f16.bmodel
-  │   │       │       └── yolov5s_1684x_f32.bmodel
-  │   │       └── segmentation
-  │   │           ├── bisenetv2
-  │   │           │   ├── bisenetv2_1684x_f16.bmodel
-  │   │           │   └── bisenetv2_1684x_f32.bmodel
-  │   │           └── unet
-  │   │               ├── unet_1684x_f16.bmodel
-  │   │               └── unet_1684x_f32.bmodel
+  │   └── model_set
+  │       ├── bmodel
+  │       │   ├── language
+  │       │   │   ├── generative
+  │       │   │   │   └── llama3
+  │       │   │   │       └── llama3-8b_int4_1dev_seq512.bmodel
+  │       │   │   └── nlp
+  │       │   │       ├── bert
+  │       │   │       │   ├── bert4torchf16.bmodel
+  │       │   │       │   └── bert4torchf32.bmodel
+  │       │   │       └── ernie3
+  │       │   │           ├── ernie3_1684x_f16.bmodel
+  │       │   │           └── ernie3_1684x_f32.bmodel
+  │       │   ├── multimodality
+  │       │   │   ├── classification
+  │       │   │   │   └── clip
+  │       │   │   │       ├── clip_image_vitb32_bm1684x_f16.bmodel
+  │       │   │   │       ├── clip_image_vitb32_f32.bmodel
+  │       │   │   │       ├── clip_text_vitb32_bm1684x_f16.bmodel
+  │       │   │   │       └── clip_text_vitb32_f32.bmodel
+  │       │   │   ├── detection
+  │       │   │   └── generative
+  │       │   │       └── stablediffusionv1_5
+  │       │   │           └── singlize
+  │       │   │               ├── text_encoder_1684x_f32.bmodel
+  │       │   │               ├── unet_1684x_f16.bmodel
+  │       │   │               ├── vae_decoder_1684x_f16.bmodel
+  │       │   │               └── vae_encoder_1684x_f16.bmodel
+  │       │   └── vision
+  │       │       ├── classification
+  │       │       │   ├── mobilenetv2
+  │       │       │   │   ├── mobilenetv2_1684x_f16.bmodel
+  │       │       │   │   └── mobilenetv2_1684x_f32.bmodel
+  │       │       │   ├── resnet
+  │       │       │   │   ├── resnet_1684x_f16.bmodel
+  │       │       │   │   └── resnet_1684x_f32.bmodel
+  │       │       │   └── ViT
+  │       │       │       ├── vit_1684x_f16.bmodel
+  │       │       │       └── vit_1684x_f32.bmodel
+  │       │       ├── detection
+  │       │       │   ├── ghostnet
+  │       │       │   │   ├── ghostnet_1684x_f16.bmodel
+  │       │       │   │   └── ghostnet_1684x_f32.bmodel
+  │       │       │   └── yolov5s
+  │       │       │       ├── yolov5s_1684x_f16.bmodel
+  │       │       │       └── yolov5s_1684x_f32.bmodel
+  │       │       └── segmentation
+  │       │           ├── bisenetv2
+  │       │           │   ├── bisenetv2_1684x_f16.bmodel
+  │       │           │   └── bisenetv2_1684x_f32.bmodel
+  │       │           └── unet
+  │       │               ├── unet_1684x_f16.bmodel
+  │       │               └── unet_1684x_f32.bmodel
   ...
   ```
 
@@ -207,7 +209,7 @@ $~~~~$
       python3 main.py --testmode 1
 
 ### 3.4 测试结果
-完成测试后，测试结果将保存在 "savefiles_iter**" 文件夹内。
+完成测试后，测试结果将保存在 `output/minimum_time_**` 文件夹内。
 
 测试结果将展示当前运行设备上的AI计算卡评分以及各个模型评分及详细参数。同时，为了确保测试期间AI计算卡是有效运行的，测试结果将会可视化地展示测试期间AI计算卡运行指标。
 

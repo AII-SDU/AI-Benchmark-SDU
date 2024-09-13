@@ -112,25 +112,26 @@ Where:
   ```
   Benchmark
   ├── model
-  │   └── pytorch
-  │       ├── language
-  │       │   ├── generative
-  │       │   │   └── llama3
-  │       │   │       └── ggml-meta-llama-3-8b-Q4_K_M.gguf
-  │       │   └── nlp
-  │       │       ├── bert
-  │       │       │   └── vocab
-  │       │       │       └── pytorch_model.bin
-  │       │       └── ernie3
-  │       │           └── vocab
-  │       │               └──pytorch_model.bin
-  │       ├── multimodality
-  │       │   ├── classification
-  │       │   │   └── clip
-  │       │   │       └── ViT-B-32.pt
-  │       │   └── generative
-  │       │       └── stablediffusionv1_5
-  │       │           └── models--runwayml--stable-diffusion-v1-5
+  │   └── model_set
+  │       └── pytorch
+  │           ├── language
+  │           │   ├── generative
+  │           │   │   └── llama3
+  │           │   │       └── ggml-meta-llama-3-8b-Q4_K_M.gguf
+  │           │   └── nlp
+  │           │       ├── bert
+  │           │       │   └── vocab
+  │           │       │       └── pytorch_model.bin
+  │           │       └── ernie3
+  │           │           └── vocab
+  │           │               └──pytorch_model.bin
+  │           ├── multimodality
+  │           │   ├── classification
+  │           │   │   └── clip
+  │           │   │       └── ViT-B-32.pt
+  │           │   └── generative
+  │           │       └── stablediffusionv1_5
+  │           │           └── models--runwayml--stable-diffusion-v1-5
   ...
   ```
  - Currently, there are no dependency files for PyTorch models under the vision category in the project. The `models--runwayml--stable-diffusion-v1-5` should be extracted to the corresponding path.
@@ -140,58 +141,59 @@ Where:
   ```
   Benchmark
   ├── model
-  │   ├── bmodel
-  │   │   ├── language
-  │   │   │   ├── generative
-  │   │   │   │   └── llama3
-  │   │   │   │       └── llama3-8b_int4_1dev_seq512.bmodel
-  │   │   │   └── nlp
-  │   │   │       ├── bert
-  │   │   │       │   ├── bert4torchf16.bmodel
-  │   │   │       │   └── bert4torchf32.bmodel
-  │   │   │       └── ernie3
-  │   │   │           ├── ernie3_1684x_f16.bmodel
-  │   │   │           └── ernie3_1684x_f32.bmodel
-  │   │   ├── multimodality
-  │   │   │   ├── classification
-  │   │   │   │   └── clip
-  │   │   │   │       ├── clip_image_vitb32_bm1684x_f16.bmodel
-  │   │   │   │       ├── clip_image_vitb32_f32.bmodel
-  │   │   │   │       ├── clip_text_vitb32_bm1684x_f16.bmodel
-  │   │   │   │       └── clip_text_vitb32_f32.bmodel
-  │   │   │   ├── detection
-  │   │   │   └── generative
-  │   │   │       └── stablediffusionv1_5
-  │   │   │           └── singlize
-  │   │   │               ├── text_encoder_1684x_f32.bmodel
-  │   │   │               ├── unet_1684x_f16.bmodel
-  │   │   │               ├── vae_decoder_1684x_f16.bmodel
-  │   │   │               └── vae_encoder_1684x_f16.bmodel
-  │   │   └── vision
-  │   │       ├── classification
-  │   │       │   ├── mobilenetv2
-  │   │       │   │   ├── mobilenetv2_1684x_f16.bmodel
-  │   │       │   │   └── mobilenetv2_1684x_f32.bmodel
-  │   │       │   ├── resnet
-  │   │       │   │   ├── resnet_1684x_f16.bmodel
-  │   │       │   │   └── resnet_1684x_f32.bmodel
-  │   │       │   └── ViT
-  │   │       │       ├── vit_1684x_f16.bmodel
-  │   │       │       └── vit_1684x_f32.bmodel
-  │   │       ├── detection
-  │   │       │   ├── ghostnet
-  │   │       │   │   ├── ghostnet_1684x_f16.bmodel
-  │   │       │   │   └── ghostnet_1684x_f32.bmodel
-  │   │       │   └── yolov5s
-  │   │       │       ├── yolov5s_1684x_f16.bmodel
-  │   │       │       └── yolov5s_1684x_f32.bmodel
-  │   │       └── segmentation
-  │   │           ├── bisenetv2
-  │   │           │   ├── bisenetv2_1684x_f16.bmodel
-  │   │           │   └── bisenetv2_1684x_f32.bmodel
-  │   │           └── unet
-  │   │               ├── unet_1684x_f16.bmodel
-  │   │               └── unet_1684x_f32.bmodel
+  │   └── model_set
+  │       ├── bmodel
+  │       │   ├── language
+  │       │   │   ├── generative
+  │       │   │   │   └── llama3
+  │       │   │   │       └── llama3-8b_int4_1dev_seq512.bmodel
+  │       │   │   └── nlp
+  │       │   │       ├── bert
+  │       │   │       │   ├── bert4torchf16.bmodel
+  │       │   │       │   └── bert4torchf32.bmodel
+  │       │   │       └── ernie3
+  │       │   │           ├── ernie3_1684x_f16.bmodel
+  │       │   │           └── ernie3_1684x_f32.bmodel
+  │       │   ├── multimodality
+  │       │   │   ├── classification
+  │       │   │   │   └── clip
+  │       │   │   │       ├── clip_image_vitb32_bm1684x_f16.bmodel
+  │       │   │   │       ├── clip_image_vitb32_f32.bmodel
+  │       │   │   │       ├── clip_text_vitb32_bm1684x_f16.bmodel
+  │       │   │   │       └── clip_text_vitb32_f32.bmodel
+  │       │   │   ├── detection
+  │       │   │   └── generative
+  │       │   │       └── stablediffusionv1_5
+  │       │   │           └── singlize
+  │       │   │               ├── text_encoder_1684x_f32.bmodel
+  │       │   │               ├── unet_1684x_f16.bmodel
+  │       │   │               ├── vae_decoder_1684x_f16.bmodel
+  │       │   │               └── vae_encoder_1684x_f16.bmodel
+  │       │   └── vision
+  │       │       ├── classification
+  │       │       │   ├── mobilenetv2
+  │       │       │   │   ├── mobilenetv2_1684x_f16.bmodel
+  │       │       │   │   └── mobilenetv2_1684x_f32.bmodel
+  │       │       │   ├── resnet
+  │       │       │   │   ├── resnet_1684x_f16.bmodel
+  │       │       │   │   └── resnet_1684x_f32.bmodel
+  │       │       │   └── ViT
+  │       │       │       ├── vit_1684x_f16.bmodel
+  │       │       │       └── vit_1684x_f32.bmodel
+  │       │       ├── detection
+  │       │       │   ├── ghostnet
+  │       │       │   │   ├── ghostnet_1684x_f16.bmodel
+  │       │       │   │   └── ghostnet_1684x_f32.bmodel
+  │       │       │   └── yolov5s
+  │       │       │       ├── yolov5s_1684x_f16.bmodel
+  │       │       │       └── yolov5s_1684x_f32.bmodel
+  │       │       └── segmentation
+  │       │           ├── bisenetv2
+  │       │           │   ├── bisenetv2_1684x_f16.bmodel
+  │       │           │   └── bisenetv2_1684x_f32.bmodel
+  │       │           └── unet
+  │       │               ├── unet_1684x_f16.bmodel
+  │       │               └── unet_1684x_f32.bmodel
   ...
   ```
 
@@ -205,7 +207,7 @@ Where:
       python main.py --testmode 1
 
 ### 3.4 Test Results
-Upon completion of the tests, the results will be saved in the "savefiles_iter**" folder.
+Upon completion of the tests, the results will be saved in the `output/minimum_time_**` folder.
 
 The test results will display the AI accelerator's score on the current device as well as the scores and detailed parameters of each model. Additionally, to ensure that the AI accelerator was operating effectively during the tests, the results will visually present the AI accelerator's performance metrics throughout the testing period.
 
