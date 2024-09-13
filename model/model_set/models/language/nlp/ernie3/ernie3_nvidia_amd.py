@@ -25,6 +25,9 @@ class ernie3_nvidia_amd(BaseModel):
         super().__init__('language/nlp/ernie3')
 
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
+        self.tokenizer_path = "model/model_set/pytorch/language/nlp/ernie3/vocab"
+        self.model_path = "model/model_set/pytorch/language/nlp/ernie3/vocab"
+        self.tokenizer = BertTokenizer.from_pretrained(self.tokenizer_path)
         
     def get_input(self):
         self.text = "Hello, how are you?"
@@ -34,9 +37,7 @@ class ernie3_nvidia_amd(BaseModel):
                                      truncation=True, max_length=self.max_length).to(self.device)
         
     def load_model(self):
-        self.tokenizer_path = "model/model_set/pytorch/language/nlp/ernie3/vocab"
-        self.model_path = "model/model_set/pytorch/language/nlp/ernie3/vocab"
-        self.tokenizer = BertTokenizer.from_pretrained(self.tokenizer_path)
+
         self.model = ErnieModel.from_pretrained(self.model_path).to(self.device)
 
     def get_params_flops(self) -> list:

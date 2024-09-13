@@ -105,7 +105,7 @@ Where:
 
 - **Other dependency files:**
 
-  - For the dependency files required for llama3 TPU inference, refer to the compilation details in `model/pytorch/language/generative/llama3/utils/README.md`
+  - For the dependency files required for llama3 TPU inference, refer to the compilation details in `model/model_set/models/language/generative/llama3/utils/README.md`
 
 - Ensure that the paths for the PyTorch model weights are formatted as follows. Vision models in the project do not use weights for now:
 

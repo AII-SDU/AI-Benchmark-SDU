@@ -108,7 +108,7 @@ $~~~~$
 
 - 其他依赖文件：
 
-  - 用于llama3 TPU推理的依赖文件编译详见 `model/model/model_set/pytorch/language/generative/llama3/utils/README.md`
+  - 用于llama3 TPU推理的依赖文件编译详见 `model/model_set/models/language/generative/llama3/utils/README.md`
 
 - 请确保PyTorch模型依赖文件路径符合如下格式：
   ```

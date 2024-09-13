@@ -233,7 +233,7 @@ class BaseModel_YOLO(nn.Module):
 
 class DetectionModel(BaseModel_YOLO):
     # YOLOv5 detection model
-    def __init__(self, cfg="model/model_set/model/vision/detection/yolov5s/configs/yolov5s.yaml", ch=3, nc=None, anchors=None):
+    def __init__(self, cfg="model/model_set/models/vision/detection/yolov5s/configs/yolov5s.yaml", ch=3, nc=None, anchors=None):
         """Initializes YOLOv5 model with configuration file, input channels, number of classes, and custom anchors."""
         super().__init__()
         if isinstance(cfg, dict):
