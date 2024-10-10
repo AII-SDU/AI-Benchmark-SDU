@@ -473,7 +473,7 @@ def parse_model(d, ch):
     return nn.Sequential(*layers), sorted(save)
 
 def yolov5s():
-    cfg = "model/model_set/model/vision/detection/yolov5s/configs/yolov5s.yaml"
+    cfg = "model/model_set/models/vision/detection/yolov5s/configs/yolov5s.yaml"
     return Model(cfg)
 
 class yolov5s_nvidia_amd(BaseModel):
@@ -492,7 +492,7 @@ class yolov5s_nvidia_amd(BaseModel):
     def get_params_flops(self) -> list:
         # 'float [params, flops]'
         flops, params = thop.profile(self.model, inputs=(self.input,), verbose=False)
-        print("flops, params:",flops, params)
+        # print("flops, params:",flops, params)
         return [flops, params]
 
     

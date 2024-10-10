@@ -35,7 +35,7 @@ from pathlib import Path
 # from thop import profile
 import torch
 import torch.nn as nn
-from model_set.model.model_base import BaseModel
+from model.model_set.model_base import BaseModel
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[3]  # YOLOv5 root directory
@@ -44,7 +44,7 @@ if str(ROOT) not in sys.path:
 if platform.system() != "Windows":
     ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from model_set.model.vision.detection.yolov5s.utils.common import (
+from model.model_set.models.vision.detection.yolov5s.utils.common import (
     C3,
     C3SPP,
     C3TR,
@@ -68,11 +68,11 @@ from model_set.model.vision.detection.yolov5s.utils.common import (
     GhostConv,
     Proto,
 )
-from model_set.model.vision.detection.yolov5s.utils.experimental import MixConv2d
-from model_set.model.vision.detection.yolov5s.utils.autoanchor import check_anchor_order
-from model_set.model.vision.detection.yolov5s.utils.general import LOGGER, check_version, check_yaml, colorstr, make_divisible, print_args
-from model_set.model.vision.detection.yolov5s.utils.plots import feature_visualization
-from model_set.model.vision.detection.yolov5s.utils.torch_utils import (
+from model.model_set.models.vision.detection.yolov5s.utils.experimental import MixConv2d
+from model.model_set.models.vision.detection.yolov5s.utils.autoanchor import check_anchor_order
+from model.model_set.models.vision.detection.yolov5s.utils.general import LOGGER, check_version, check_yaml, colorstr, make_divisible, print_args
+from model.model_set.models.vision.detection.yolov5s.utils.plots import feature_visualization
+from model.model_set.models.vision.detection.yolov5s.utils.torch_utils import (
     fuse_conv_and_bn,
     initialize_weights,
     model_info,
@@ -234,7 +234,7 @@ class BaseModel_YOLO(nn.Module):
 
 class DetectionModel(BaseModel_YOLO):
     # YOLOv5 detection model
-    def __init__(self, cfg="model_set/model/vision/detection/yolov5s/configs/yolov5s.yaml", ch=3, nc=None, anchors=None):
+    def __init__(self, cfg="model/model_set/models/vision/detection/yolov5s/configs/yolov5s.yaml", ch=3, nc=None, anchors=None):
         """Initializes YOLOv5 model with configuration file, input channels, number of classes, and custom anchors."""
         super().__init__()
         if isinstance(cfg, dict):
@@ -474,11 +474,12 @@ def parse_model(d, ch):
     return nn.Sequential(*layers), sorted(save)
 
 def yolov5s():
-    cfg = "model_set/model/vision/detection/yolov5s/configs/yolov5s.yaml"
+    cfg = "model/model_set/models/vision/detection/yolov5s/configs/yolov5s.yaml"
     return Model(cfg)
 
 class yolov5s_mthreads(BaseModel):
     def __init__(self):
+        super().__init__('vision/detection/yolov5s')
         self.input_shape =(1, 3, 640, 640)
         self.device = torch.device('musa' if torch.musa.is_available() else 'cpu')
 
@@ -491,7 +492,7 @@ class yolov5s_mthreads(BaseModel):
     def get_params_flops(self) -> list:
         # 'float [params, flops]'
         flops, params = thop.profile(self.model, inputs=(self.input,), verbose=False)
-        print("flops, params:",flops, params)
+        # print("flops, params:",flops, params)
         return [flops, params]
 
     
@@ -501,22 +502,3 @@ class yolov5s_mthreads(BaseModel):
             output = self.model(self.input)
         return output
     
-if __name__ == "__main__":
-    model = yolov5s_mthreads()
-    model.get_input()
-    model.load_model()
-    params_flops = model.get_params_flops() 
-    import time
-    iterations = 100
-    for _ in range(10):
-        with torch.no_grad():
-            image = model.inference()
-    t_start = time.time()
-    for _ in range(iterations):
-        with torch.no_grad():
-            image = model.inference()
-
-    elapsed_time = time.time() - t_start
-    latency = elapsed_time / iterations * 1000
-    FPS = 1000 / latency
-    print(f"FPS: {FPS:.2f}")

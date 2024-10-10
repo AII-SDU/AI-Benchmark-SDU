@@ -21,7 +21,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as modelzoo
 import os
-from model_set.model.model_base import BaseModel
+from model.model_set.model_base import BaseModel
 from thop import profile
 
 # backbone_url = 'https://github.com/CoinCheung/BiSeNet/releases/download/0.0.0/backbone_v2.pth'
@@ -404,6 +404,7 @@ class bisenetv2(nn.Module):
 
 class bisenetv2_mthreads(BaseModel):
     def __init__(self):
+        super().__init__('vision/segmentation/bisenetv2')
         self.input_shape =(1, 3, 1024, 2048)
         self.device = torch.device('musa' if torch.musa.is_available() else 'cpu')
 
@@ -416,7 +417,7 @@ class bisenetv2_mthreads(BaseModel):
     def get_params_flops(self) -> list:
         # 'float [params, flops]'
         flops, params = profile(self.model, inputs=(self.input,), verbose=False)
-        print("flops, params:",flops, params)
+        # print("flops, params:",flops, params)
         return [flops, params]
 
     def inference(self):
@@ -425,22 +426,3 @@ class bisenetv2_mthreads(BaseModel):
             output = self.model(self.input)
         return output
     
-if __name__ == "__main__":
-    model = bisenetv2_mthreads()
-    model.get_input()
-    model.load_model()
-    params_flops = model.get_params_flops() 
-    import time
-    iterations = 100
-    for _ in range(10):
-        with torch.no_grad():
-            image = model.inference()
-    t_start = time.time()
-    for _ in range(iterations):
-        with torch.no_grad():
-            image = model.inference()
-
-    elapsed_time = time.time() - t_start
-    latency = elapsed_time / iterations * 1000
-    FPS = 1000 / latency
-    print(f"FPS: {FPS:.2f}")

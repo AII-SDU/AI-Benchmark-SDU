@@ -259,7 +259,7 @@ $~~~~$
 ## 5. 测试结果示例
 
 
-当前版本已完成对 NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT, AMD Radeon RX 7900XTX (0x744c) 的测试。测试入口：
+当前版本已完成对 NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT, AMD Radeon RX 7900XTX (0x744c), Moore Threads MTT S80 的测试。测试入口：
 
     python3 main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
   
@@ -289,4 +289,6 @@ $~~~~$
   <img src="readmeimg/benchmark_0x744c.png" width="80%" />
 </p>
 
-
+<p align="center">
+  <img src="readmeimg/benchmark_MTT S80_.png" width="80%" />
+</p>

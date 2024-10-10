@@ -18,6 +18,7 @@ modification, are permitted provided that the following conditions are met:
 from device.device_set.device_nvidia import NVIDIA
 from device.device_set.device_amd import AMD
 from device.device_set.device_sophgo import sophgoTPU
+from device.device_set.device_mthreads import MTHREADS
 from enums import DeviceType
 
 import subprocess
@@ -31,7 +32,8 @@ class DeviceFactory:
         device_classes = {
             DeviceType.DEVICE_TYPE_NVIDIA: NVIDIA,
             DeviceType.DEVICE_TYPE_AMD: AMD,
-            DeviceType.DEVICE_TYPE_SophgoTPU: sophgoTPU
+            DeviceType.DEVICE_TYPE_SophgoTPU: sophgoTPU,
+            DeviceType.DEVICE_TYPE_MTHREADS: MTHREADS
         }
 
         for device_type, device_class in device_classes.items():
@@ -57,6 +59,9 @@ class DeviceFactory:
 
         elif device_type == DeviceType.DEVICE_TYPE_SophgoTPU:
             return sophgoTPU()
+        
+        elif device_type == DeviceType.DEVICE_TYPE_MTHREADS:
+            return MTHREADS()
 
         else:
             return None

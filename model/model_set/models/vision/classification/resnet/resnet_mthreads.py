@@ -18,7 +18,7 @@ modification, are permitted provided that the following conditions are met:
 import torch_musa
 import torch
 import torch.nn as nn
-from model_set.model.model_base import BaseModel
+from model.model_set.model_base import BaseModel
 from thop import profile
 try:
     from torch.hub import load_state_dict_from_url
@@ -391,6 +391,8 @@ def resnet(pretrained=False, progress=True, **kwargs):
 
 class resnet_mthreads(BaseModel):
     def __init__(self):
+        super().__init__('vision/classification/resnet')
+        
         self.input_shape =(1, 3, 256, 256)
         self.device = torch.device('musa' if torch.musa.is_available() else 'cpu')
 
@@ -403,7 +405,7 @@ class resnet_mthreads(BaseModel):
     def get_params_flops(self) -> list:
         # 'float [params, flops]'
         flops, params = profile(self.model, inputs=(self.input,), verbose=False)
-        print("flops, params:",flops, params)
+        # print("flops, params:",flops, params)
         return [flops, params]
 
     def inference(self):
@@ -412,22 +414,3 @@ class resnet_mthreads(BaseModel):
             output = self.model(self.input)
         return output
     
-if __name__ == "__main__":
-    model = resnet_mthreads()
-    model.get_input()
-    model.load_model()
-    params_flops = model.get_params_flops() 
-    import time
-    iterations = 100
-    for _ in range(10):
-        with torch.no_grad():
-            image = model.inference()
-    t_start = time.time()
-    for _ in range(iterations):
-        with torch.no_grad():
-            image = model.inference()
-
-    elapsed_time = time.time() - t_start
-    latency = elapsed_time / iterations * 1000
-    FPS = 1000 / latency
-    print(f"FPS: {FPS:.2f}")

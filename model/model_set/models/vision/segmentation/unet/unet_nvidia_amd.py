@@ -221,7 +221,7 @@ class unet_nvidia_amd(BaseModel):
     def get_params_flops(self) -> list:
         # 'float [params, flops]'
         flops, params = profile(self.model, inputs=(self.input,), verbose=False)
-        print("flops, params:",flops, params)
+        # print("flops, params:",flops, params)
         return [flops, params]
 
     def inference(self):

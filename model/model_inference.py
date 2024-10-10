@@ -30,14 +30,18 @@ def run_inference(model, iterations, minimum_time, model_performance, event_list
     model_infer_stop_event = event_list[0]
     data_copy_completed_event = event_list[1]
     monitor_stop_event = event_list[2]
-
+    
+    # model.get_input()
+    # model.get_params_flops()
+    # model.load_model()
+    # torch.musa.init()
     model.get_input()
     model.load_model()
     params, flops = model.get_params_flops()
-
+    
     # Pre-run inference to warm up the device
     for _ in range(int(iterations / 10)):
-        model.inference()       
+        model.inference()      
 
     # Within the inference loop, wait for all processes to reach the barrier, 
     # ensuring they start each iteration of inference simultaneously。

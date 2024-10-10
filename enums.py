@@ -21,4 +21,5 @@ class DeviceType(Enum):
     DEVICE_TYPE_NVIDIA = 1
     DEVICE_TYPE_AMD = auto()
     DEVICE_TYPE_SophgoTPU = auto()
+    DEVICE_TYPE_MTHREADS = auto()
     DEVICE_TYPE_MAX = auto()

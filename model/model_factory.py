@@ -18,6 +18,7 @@ modification, are permitted provided that the following conditions are met:
 import os
 import importlib
 from enums import DeviceType
+import datetime
 
 class ModelFactory:
     """
@@ -54,6 +55,27 @@ class ModelFactory:
 
         return models
     
+    def __get_mthreads_model_list(self, model_path_list):
+        models = []
+        if 'language/generative/llama3' in model_path_list:
+            model_path_list.remove('language/generative/llama3')
+            print(f" - {datetime.datetime.now().strftime('%H:%M:%S.%f')} - The model *language/generative/llama3* is currently not deployed on {self.device_type}.")
+        if 'multimodality/classification/clip' in model_path_list:
+            model_path_list.remove('multimodality/classification/clip')
+            print(f" - {datetime.datetime.now().strftime('%H:%M:%S.%f')} - The model *multimodality/classification/clip* is currently not deployed on {self.device_type}.")
+            
+        for model_path in model_path_list:
+            module_name = os.path.basename(model_path) + '_mthreads'
+
+            module_path = f"model.model_set.models.{model_path.replace('/', '.')}.{module_name.lower()}"
+            module = importlib.import_module(module_path)
+            model_class = getattr(module, module_name)
+
+            model = model_class() 
+            models.append(model)
+
+        return models
+    
     def get_model_list(self, model_path_list):
 
         if self.device_type in [DeviceType.DEVICE_TYPE_NVIDIA , DeviceType.DEVICE_TYPE_AMD]:
@@ -61,6 +83,9 @@ class ModelFactory:
 
         elif self.device_type == DeviceType.DEVICE_TYPE_SophgoTPU:
             return self.__get_sophgo_model_list(model_path_list)
+        
+        elif self.device_type == DeviceType.DEVICE_TYPE_MTHREADS:
+            return self.__get_mthreads_model_list(model_path_list)
 
 
 

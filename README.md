@@ -255,7 +255,7 @@ The test results will display the AI accelerator's score on the current device a
 
 ## 5. Sample Test Results
 
-Tests have been completed for NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT and AMD Radeon RX 7900XTX (0x744c) in the current version. The test command is as follows:
+Tests have been completed for NVIDlA GeForce GTX 1080 Ti, NVIDIA GeForce RTX 2080 Ti, NVIDIA GeForce RTX 4080 SUPER, SophgoTPU SC7 HP75 (Sophgo0x1684x), AMD Radeon RX 6700XT, AMD Radeon RX 7900XTX (0x744c) and Moore Threads MTT S80 in the current version. The test command is as follows:
 
     python3 main.py --testmode 0 --iterations 5000 --device_monitor_interval 0.3 --bmodel_precision 32
   
@@ -283,4 +283,8 @@ The test results are as follows:
 
 <p align="center">
   <img src="readmeimg/benchmark_0x744c.png" width="80%" />
+</p>
+
+<p align="center">
+  <img src="readmeimg/benchmark_MTT S80_.png" width="80%" />
 </p>

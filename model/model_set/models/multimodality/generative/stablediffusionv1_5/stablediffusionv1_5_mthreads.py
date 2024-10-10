@@ -16,13 +16,16 @@ modification, are permitted provided that the following conditions are met:
 # AI Benchmark SDU Team
 import torch_musa
 import torch
-from model_set.model.model_base import BaseModel
+import json
+from model.model_set.model_base import BaseModel
 from diffusers import StableDiffusionPipeline
 
 class stablediffusionv1_5_mthreads(BaseModel):
     def __init__(self):
+        super().__init__('multimodality/generative/stablediffusionv1_5')
+
         self.device = torch.device('musa' if torch.musa.is_available() else 'cpu')
-        self.model_path = "model_set/pytorch/multimodality/generative/stablediffusionv1_5/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9"
+        self.model_path = "model/model_set/pytorch/multimodality/generative/stablediffusionv1_5/models--runwayml--stable-diffusion-v1-5/snapshots/1d0c4ebf6ff58a5caecab40fa1406526bca4b5b9"
 
     def get_input(self):
         self.prompt = "a photo of an astronaut riding a horse on mars"
@@ -32,26 +35,16 @@ class stablediffusionv1_5_mthreads(BaseModel):
 
     def get_params_flops(self) -> list:
         'float [params, flops]'
-        pass
+        with open('config.json', 'r') as file:
+            config = json.load(file)
+            model_info = config.get('model_info', {}).get(self.model_identifier, {})
+            params = model_info.get('Params(M)', 'Not available')
+            flops = model_info.get('FLOPs(G)', 'Not available')
+        return [params, flops]
 
     def inference(self):
         image = self.pipeline(prompt = self.prompt).images[0]
         return image
     
-if __name__ == "__main__":
-    model = stablediffusionv1_5_mthreads()
-    model.get_input()
-    model.load_model()
-    import time
-    iterations = 1 
-    t_start = time.time()
-    for _ in range(iterations):
-        with torch.no_grad():
-            image = model.inference()
-
-    elapsed_time = time.time() - t_start
-    latency = elapsed_time / iterations * 1000
-    FPS = 1000 / latency
-    print(f"FPS: {FPS:.2f}")
     
     
